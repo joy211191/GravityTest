@@ -40,12 +40,11 @@ public class GravitySelector : Singleton<GravitySelector> {
             rotationVector.y = Closest((int)rotationVector.y, 90);
             rotationVector.z = Closest((int)rotationVector.z, 90);
             Physics.gravity = transform.up * GRAVITYVALUE;
-            rotationVector.y = holoExo.transform.parent.rotation.eulerAngles.y;
             holoExo.transform.localRotation = Quaternion.Euler(Vector3.zero);
             playerTransform.rotation = transform.localRotation;
             playerTransform.position = tempPosition;
+            transform.rotation = Quaternion.Euler(rotationVector);
             InputManager.Instance.gravityButtonCancelled = false;
-            rotationVector = transform.rotation.eulerAngles;
         }
         Debug.DrawRay(playerTransform.transform.position, rotationVector);
     }
