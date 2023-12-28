@@ -4,6 +4,7 @@ public class GravitySelector : Singleton<GravitySelector> {
     public Vector3 gravity;
     public const float GRAVITYVALUE = -9.81f;
     public GameObject holoExo;
+    [SerializeField]
     Vector3 rotationVector = Vector3.zero;
     [SerializeField]
     float lerpFactor = 1;
@@ -35,6 +36,9 @@ public class GravitySelector : Singleton<GravitySelector> {
             tempPosition = holoExo.transform.position;
         }
         if (InputManager.Instance.gravityButtonCancelled) {
+            rotationVector.x = Closest((int)rotationVector.x, 90);
+            rotationVector.y = Closest((int)rotationVector.y, 90);
+            rotationVector.z = Closest((int)rotationVector.z, 90);
             Physics.gravity = transform.up * GRAVITYVALUE;
             rotationVector.y = holoExo.transform.parent.rotation.eulerAngles.y;
             holoExo.transform.localRotation = Quaternion.Euler(Vector3.zero);
@@ -44,5 +48,14 @@ public class GravitySelector : Singleton<GravitySelector> {
             rotationVector = transform.rotation.eulerAngles;
         }
         Debug.DrawRay(playerTransform.transform.position, rotationVector);
+    }
+
+    public int Closest(int value, int divisor) {
+        int quotient = value / divisor;
+        int firstNumber = divisor * quotient;
+        int secondNumber = (value * divisor) > 0 ? (divisor * (quotient + 1)) : (divisor * (quotient - 1));
+        if (Mathf.Abs(value - firstNumber) < Mathf.Abs(value - secondNumber))
+            return firstNumber;
+        return secondNumber;
     }
 }
