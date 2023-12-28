@@ -41,7 +41,7 @@ public partial class @Player: IInputActionCollection2, IDisposable
                     ""type"": ""Value"",
                     ""id"": ""4cd58e45-9651-4a7d-9439-b743342bf8df"",
                     ""expectedControlType"": ""Vector2"",
-                    ""processors"": ""NormalizeVector2"",
+                    ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
                 },
@@ -201,7 +201,7 @@ public partial class @Player: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""e5bd0851-0ba4-46d6-ba18-3766a118f132"",
                     ""path"": ""<Keyboard>/leftCtrl"",
-                    ""interactions"": """",
+                    ""interactions"": ""Hold(duration=0.1,pressPoint=0.05)"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""GravityMenu"",

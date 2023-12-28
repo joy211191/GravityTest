@@ -19,7 +19,8 @@ public class ThirdPersonUserControl : MonoBehaviour
 
     private void Update() {
         cameraForward = transform.forward;
-        cameraForward = Vector3.Scale(cameraTransform.forward, new Vector3(1, 0, 1)).normalized;
+        Vector3 playerVector = transform.forward + transform.right;
+        cameraForward = Vector3.Scale(cameraTransform.forward, playerVector).normalized;
         moveVector = InputManager.Instance.MovementVector.y * cameraForward + InputManager.Instance.MovementVector.x * cameraTransform.right;
         character.Move(moveVector);
     }

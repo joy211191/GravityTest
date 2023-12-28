@@ -10,12 +10,10 @@ public class CharacterAnimator : ThirdPersonCharacter {
     public float forwardSensorLength;
     public float sensorLength;
     public Animator animator;
-    [SerializeField]
-    float animSpeedMultiplier = 1f;
 
     protected override void Awake() {
         base.Awake();
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
 
     }
 
@@ -56,7 +54,6 @@ public class CharacterAnimator : ThirdPersonCharacter {
 
     void Update() {
         UpdateAnimator(moveVector);
-        //transform.up = -Physics.gravity;
     }
 
     public void FixedUpdate() {
@@ -64,7 +61,6 @@ public class CharacterAnimator : ThirdPersonCharacter {
         if (!grounded) {
             HandleAirBorneMovement();
         }
-        rb.AddForce(Physics.gravity*gravityMultiplier);
     }
 
     public void OnAnimatorMove() {
