@@ -40,10 +40,6 @@ public class CharacterAnimator : ThirdPersonCharacter {
     void UpdateAnimator(Vector3 move) {
         animator.SetFloat("Forward", forwardAmount, 0.1f, Time.deltaTime);
         animator.SetFloat("Turn", turnAmount, 0.1f, Time.deltaTime);
-        if (grounded && move.magnitude > 0)
-            animator.speed = animSpeedMultiplier;
-        else
-            animator.speed = 1;
     }
 
     public void HandleGroundedMovement() {
@@ -60,7 +56,7 @@ public class CharacterAnimator : ThirdPersonCharacter {
 
     void Update() {
         UpdateAnimator(moveVector);
-        transform.up = -GravitySelector.Instance.gravity;
+        //transform.up = -Physics.gravity;
     }
 
     public void FixedUpdate() {
@@ -68,7 +64,7 @@ public class CharacterAnimator : ThirdPersonCharacter {
         if (!grounded) {
             HandleAirBorneMovement();
         }
-        rb.AddForce(GravitySelector.Instance.gravity*gravityMultiplier);
+        rb.AddForce(Physics.gravity*gravityMultiplier);
     }
 
     public void OnAnimatorMove() {

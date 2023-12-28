@@ -46,7 +46,7 @@
                 {
                     "name": "WASD",
                     "id": "2ad6f878-7e9c-4697-a192-4e7f9893e8a6",
-                    "path": "2DVector",
+                    "path": "2DVector(mode=2)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -112,7 +112,7 @@
                 {
                     "name": "2D Vector",
                     "id": "e6ca5868-f921-40c7-b85c-f07ca436ed65",
-                    "path": "2DVector",
+                    "path": "2DVector(mode=2)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -169,6 +169,17 @@
                     "id": "86ecd5dc-a048-4a96-ab8c-f68e4e751308",
                     "path": "<Mouse>/middleButton",
                     "interactions": "Hold(duration=0.1,pressPoint=0.05)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GravityMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e5bd0851-0ba4-46d6-ba18-3766a118f132",
+                    "path": "<Keyboard>/leftCtrl",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "GravityMenu",

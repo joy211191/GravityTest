@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public enum GravityDirection {
     X_AXIS,
@@ -14,40 +13,14 @@ public enum GravityDirection {
 public class GravitySelector : Singleton<GravitySelector> {
     public GravityDirection direction;
     public Vector3 gravity;
-    Vector3 gravityDirectionVector;
     public const float GRAVITYVALUE = 9.81f;
     public GameObject holoExo;
     Vector3 rotationVector = Vector3.zero;
     [SerializeField]
     float lerpFactor = 1;
 
-    public void FixedUpdate() {
-        switch (direction) {
-            case GravityDirection.X_AXIS: {
-                    gravity = Vector3.right * GRAVITYVALUE;
-                    break;
-                }
-            case GravityDirection.N_X_AXIS: {
-                    gravity = -Vector3.right * GRAVITYVALUE;
-                    break;
-                }
-            case GravityDirection.Y_AXIS: {
-                    gravity = Vector3.up * GRAVITYVALUE;
-                    break;
-                }
-            case GravityDirection.N_Y_AXIS: {
-                    gravity = -Vector3.up * GRAVITYVALUE;
-                    break;
-                }
-            case GravityDirection.Z_AXIS: {
-                    gravity = Vector3.forward * GRAVITYVALUE;
-                    break;
-                }
-            case GravityDirection.N_Z_AXIS: {
-                    gravity = -Vector3.forward * GRAVITYVALUE;
-                    break;
-                }
-        }
+    private void Awake() {
+        gravity = -transform.up * GRAVITYVALUE;
     }
 
     void Update() {
@@ -56,23 +29,26 @@ public class GravitySelector : Singleton<GravitySelector> {
         if (InputManager.Instance.GravitySelection) {
             if (Mathf.Abs(InputManager.Instance.LookVector.y) > 1) {
                 rotationVector.z = 0;
-                rotationVector += new Vector3(90 * InputManager.Instance.LookVector.normalized.y, 0f, 0);
+                rotationVector = holoExo.transform.rotation.eulerAngles + new Vector3(90 * InputManager.Instance.LookVector.normalized.y, 0f, 0);
                 rotationVector.x -= rotationVector.x % 90;
             }
             else if (Mathf.Abs(InputManager.Instance.LookVector.x) > 1) {
                 rotationVector.x = 0;
-                rotationVector = -new Vector3(0f, 0f, 90 * InputManager.Instance.LookVector.normalized.x);
+                rotationVector = holoExo.transform.rotation.eulerAngles - new Vector3(0f, 0f, 90 * InputManager.Instance.LookVector.normalized.x);
                 rotationVector.y -= rotationVector.y % 90;
             }
             holoExo.transform.localRotation = Quaternion.Slerp(holoExo.transform.localRotation, Quaternion.Euler(rotationVector), Time.deltaTime * lerpFactor);
-            gravityDirectionVector = rotationVector;
+            transform.localRotation = Quaternion.Euler(rotationVector);
         }
         else {
             rotationVector = Vector3.zero;
             holoExo.transform.localRotation = Quaternion.Euler(Vector3.zero);
         }
-        //if (InputManager.Instance.gravityButtonCancelled) {
-        //    if(gravity.x>0)
-        //}
+        if (InputManager.Instance.gravityButtonCancelled) {
+            Physics.gravity = -transform.up * GRAVITYVALUE;
+            rotationVector.y = holoExo.transform.parent.rotation.eulerAngles.y;
+            holoExo.transform.parent.rotation =  Quaternion.Euler(-rotationVector);
+            InputManager.Instance.gravityButtonCancelled = false;
+        }
     }
 }
