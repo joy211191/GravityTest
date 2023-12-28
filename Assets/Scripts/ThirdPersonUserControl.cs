@@ -18,6 +18,8 @@ public class ThirdPersonUserControl : MonoBehaviour
     }
 
     private void Update() {
+        if (InputManager.Instance.GravitySelection)
+            return;
         cameraForward = transform.forward;
         Vector3 playerVector = transform.forward + transform.right;
         cameraForward = Vector3.Scale(cameraTransform.forward, playerVector).normalized;
